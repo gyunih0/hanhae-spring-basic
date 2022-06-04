@@ -3,7 +3,6 @@ package com.sparta.homework1.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -13,7 +12,7 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 
-public class Member {
+public class Member extends Timestamped{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
