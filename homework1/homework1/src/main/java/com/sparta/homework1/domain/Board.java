@@ -1,9 +1,12 @@
 package com.sparta.homework1.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Getter
@@ -18,10 +21,15 @@ public class Board extends Timestamped {
     }
 
     @Id
+    @Column(name = "BOARD_ID")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "username", nullable = false)
+    @JsonManagedReference
+    @OneToMany(mappedBy = "board")
+    private List<Comment> commentList = new ArrayList<>();
+
+    @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
@@ -29,4 +37,17 @@ public class Board extends Timestamped {
 
     @Column(nullable = true)
     private String article;
+
+    public void update(BoardDto boardDto) {
+        this.name = boardDto.getName();
+        this.title = boardDto.getTitle();
+        this.article = boardDto.getArticle();
+    }
+
+    public void addComment(Comment comment) {
+        this.commentList.add(comment);
+        if (comment.getBoard() != this) {
+            comment.setBoard(this);
+        }
+    }
 }

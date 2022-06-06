@@ -30,7 +30,7 @@ public class MemberService {
     }
 
     @Transactional
-    public long update(Long id, MemberDto memberDto) {
+    public Long update(Long id, MemberDto memberDto) {
         Member member = memberRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("해당 아이디가 존재하지 않습니다.")
         );
@@ -40,7 +40,7 @@ public class MemberService {
 
     }
 
-    public long delete(Long id) {
+    public Long delete(Long id) {
         memberRepository.deleteById(id);
         return id;
     }

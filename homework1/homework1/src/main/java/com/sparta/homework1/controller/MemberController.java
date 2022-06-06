@@ -36,12 +36,12 @@ public class MemberController {
     }
 
     @PutMapping("/member/{id}")
-    public long updateMember(@PathVariable Long id, @RequestBody MemberDto memberDto) {
+    public Long updateMember(@PathVariable Long id, @RequestBody MemberDto memberDto) {
         return memberService.update(id, memberDto);
     }
 
     @DeleteMapping("/member/{id}")
-    public long deleteMember(@PathVariable Long id) {
+    public Long deleteMember(@PathVariable Long id) {
         return memberService.delete(id);
     }
 }
