@@ -36,15 +36,4 @@ public class Comment extends Timestamped {
         this.name = commentDto.getName();
         this.comments = commentDto.getComments();
     }
-
-    public void setBoard(Board board) {
-        if (this.board != null) {
-            this.board.getCommentList().remove(this);
-        }
-        this.board = board;
-        if (!board.getCommentList().contains(this)) {
-            board.addComment(this);
-        }
-    }
-
 }

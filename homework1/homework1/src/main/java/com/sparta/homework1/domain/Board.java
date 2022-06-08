@@ -27,7 +27,7 @@ public class Board extends Timestamped {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "board")
-    private List<Comment> commentList = new ArrayList<>();
+    private final List<Comment> commentList = new ArrayList<>();
 
     @Column(nullable = false)
     private String name;
@@ -44,10 +44,5 @@ public class Board extends Timestamped {
         this.article = boardDto.getArticle();
     }
 
-    public void addComment(Comment comment) {
-        this.commentList.add(comment);
-        if (comment.getBoard() != this) {
-            comment.setBoard(this);
-        }
-    }
+
 }

@@ -11,49 +11,36 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
+
 @RestController
 public class CommentController {
 
     private final CommentService commentService;
-    private final BoardRepository boardRepository;
 
     @Autowired
-    public CommentController(CommentService commentService, BoardRepository boardRepository) {
+    public CommentController(CommentService commentService) {
         this.commentService = commentService;
-        this.boardRepository = boardRepository;
     }
 
 
-//    @PostMapping("/")
-
-    @PostMapping("/board/{id}/comment")
-    public Long postComment(@PathVariable Long id, @RequestBody CommentDto commentDto) {
-        Board board = boardRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("해당 게시물이 존재하지 않습니다.")
-        );
-
-        return commentService.createComment(board, commentDto);
+    @PostMapping("/board/{boardId}/comment")
+    public Long postComment(@PathVariable Long boardId, @RequestBody CommentDto commentDto) {
+        return commentService.createComment(boardId, commentDto);
     }
 
-    @GetMapping("/board/{id}/comment")
-    public List<Comment> getComments(@PathVariable Long id) {
-        Board board = boardRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("해당 게시물이 존재하지 않습니다.")
-        );
-
-        return commentService.getComments(board);
+    @GetMapping("/board/{boardId}/comment")
+    public List<Comment> getComments(@PathVariable Long boardId) {
+        return commentService.getComments(boardId);
     }
 
-    @PutMapping("/board/{id}/comment/{commentId}")
-    public Long updateComment(@PathVariable Long id, @PathVariable Long commentId, @RequestBody CommentDto commentDto) {
-        Board board = boardRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("해당 게시물이 존재하지 않습니다.")
-        );
+    @PutMapping("/board/comment/{commentId}")
+    public Long updateComment(@PathVariable Long commentId, @RequestBody CommentDto commentDto) {
         return commentService.updateComment(commentId, commentDto);
     }
 
-    @DeleteMapping("/board/{id}/comment/{commentId}")
-    public Long deleteComment(@PathVariable Long id, @PathVariable Long commentId) {
+    @DeleteMapping("/board/comment/{commentId}")
+    public Long deleteComment(@PathVariable Long commentId) {
         return commentService.delete(commentId);
     }
 }

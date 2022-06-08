@@ -3,6 +3,7 @@ package com.sparta.homework1.service;
 import com.sparta.homework1.domain.Board;
 import com.sparta.homework1.domain.Comment;
 import com.sparta.homework1.domain.CommentDto;
+import com.sparta.homework1.repository.BoardRepository;
 import com.sparta.homework1.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,22 +13,33 @@ import java.util.List;
 @Service
 public class CommentService {
 
+
     private final CommentRepository commentRepository;
+    private final BoardRepository boardRepository;
 
     @Autowired
-    public CommentService(CommentRepository commentRepository) {
+    public CommentService(CommentRepository commentRepository, BoardRepository boardRepository) {
         this.commentRepository = commentRepository;
+        this.boardRepository = boardRepository;
     }
 
-    public Long createComment(Board board, CommentDto commentDto) {
+    public Board findBoardById(Long id) {
+        return boardRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("해당 게시물이 존재하지 않습니다.")
+        );
+    }
 
+
+    public Long createComment(Long boardId, CommentDto commentDto) {
+        Board board = findBoardById(boardId);
         Comment comment = new Comment(board, commentDto);
         commentRepository.save(comment);
 
         return comment.getId();
     }
 
-    public List<Comment> getComments(Board board) {
+    public List<Comment> getComments(Long boardId) {
+        Board board = findBoardById(boardId);
         return commentRepository.findAllByBoard(board);
     }
 
