@@ -7,10 +7,12 @@ import com.sparta.homework1.repository.BoardRepository;
 import com.sparta.homework1.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class CommentService {
 
 
@@ -30,6 +32,7 @@ public class CommentService {
     }
 
 
+
     public Long createComment(Long boardId, CommentDto commentDto) {
         Board board = findBoardById(boardId);
         Comment comment = new Comment(board, commentDto);
@@ -42,6 +45,7 @@ public class CommentService {
         Board board = findBoardById(boardId);
         return commentRepository.findAllByBoard(board);
     }
+
 
     public Long updateComment(Long id, CommentDto commentDto) {
         Comment comment = commentRepository.findById(id).orElseThrow(

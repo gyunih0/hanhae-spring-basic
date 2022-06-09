@@ -1,6 +1,8 @@
 package com.sparta.homework1.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -22,11 +24,11 @@ public class Board extends Timestamped {
 
     @Id
     @Column(name = "BOARD_ID")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "board")
+    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER)
     private final List<Comment> commentList = new ArrayList<>();
 
     @Column(nullable = false)

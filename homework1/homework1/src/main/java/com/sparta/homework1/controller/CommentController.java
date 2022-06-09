@@ -1,14 +1,14 @@
 package com.sparta.homework1.controller;
 
 
-import com.sparta.homework1.domain.Board;
 import com.sparta.homework1.domain.Comment;
 import com.sparta.homework1.domain.CommentDto;
-import com.sparta.homework1.repository.BoardRepository;
 import com.sparta.homework1.service.CommentService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -25,7 +25,7 @@ public class CommentController {
 
 
     @PostMapping("/board/{boardId}/comment")
-    public Long postComment(@PathVariable Long boardId, @RequestBody CommentDto commentDto) {
+    public Long postComment(@PathVariable Long boardId, @RequestBody @Valid CommentDto commentDto) {
         return commentService.createComment(boardId, commentDto);
     }
 

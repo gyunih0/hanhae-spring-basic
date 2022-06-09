@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://springboot-database.cqmn9wykwutn.ap-northeast-2.rds.amazonaws.com:3306/homework?serverTimezone=Asia/Seoul
+    username: admin
+    password: hggh0323
+
+  jpa:
+    open-in-view: false
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+      use-new-id-generator-mappings: false
+    properties:
+      hibernate.format_sql: true
